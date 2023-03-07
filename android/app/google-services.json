@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "116096283498",
+    "project_id": "reselling-app-4ae99",
+    "storage_bucket": "reselling-app-4ae99.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116096283498:android:46f0feb7bea54e82f86b13",
+        "android_client_info": {
+          "package_name": "com.reselling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116096283498-i0mfbgnqa7h0eft7m70of3bqgicglooa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXRpXsUhT4jO9YhK9yl31syUk2eoedUIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116096283498-i0mfbgnqa7h0eft7m70of3bqgicglooa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
