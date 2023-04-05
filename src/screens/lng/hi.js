@@ -60,6 +60,8 @@ export default {
   PRICE_RANGE: 'Preisklasse',
   BRAND_WITH_CATEGORY: 'Marke mit Kategorie',
   CLEAR_FILTER: 'Filter löschen',
+  CLEAR_SEARCH: 'Saubere Suche',
+
   SHOW_RESULT: 'Zeige Ergebnis',
   CLOSE: 'Nah dran',
   FILTER: 'Filter',
@@ -113,6 +115,8 @@ export default {
 
   // Subscription
   SUBSCRIPTION: 'Abonnement',
+  PRE_SUBSCRIPTION:'Premium Abonnement',
+
   STARTER: 'Bronze',
   BASIC: 'Silver',
   PRO: 'Gold',
@@ -136,6 +140,5 @@ export default {
   NEWS_TITLE: 'Nachrichten',
   ANALYTICS_TITLE: 'Analysen',
   VISITLINK: 'Weiterlesen',
-  UPLOAD_ON:' Aktualisiert am'
-
+  UPLOAD_ON: ' Aktualisiert am',
 };

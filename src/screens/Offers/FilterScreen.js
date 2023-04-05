@@ -11,7 +11,7 @@ import {colors} from '../../helper/colorConstant';
 import {fontSize, statusBar, hp, wp} from '../../helper/utilities';
 import {routeName, strings} from '../../helper/constants';
 import {navigate} from '../../helper/rootNavigation';
-import {CategoryItem, GradientBtn, Input} from '../../components';
+import {CategoryItem, GradientBtn, Input, Loading} from '../../components';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {icons} from '../../helper/iconConstant';
 import {getCategoryWithBrand, getFilter} from '../../actions/OfferAction';
@@ -22,7 +22,16 @@ import Toast from 'react-native-simple-toast';
 
 const SLIDERVALUE = {min: 0, max: 100};
 
-const FilterScreen = () => {
+const FilterScreen = ({route}) => {
+  console.log('helloRoute:', route);
+
+  useEffect(() => {
+    if (route.params !== undefined) {
+      filterApicall(route.params.searchText);
+    }
+  }, [route]);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(0);
   const select = index => {
@@ -200,7 +209,8 @@ const FilterScreen = () => {
 
   const [shopItem, setShopItem] = useState([]);
 
-  const filterApicall = async () => {
+  const filterApicall = async searchText => {
+    setLoading(true);
     const categoryArr = cateName.join(', ');
     const brandIdArr = brandId.join(', ');
     const percentageArr = selectedslide.join(', ');
@@ -217,6 +227,10 @@ const FilterScreen = () => {
     }
     brandIdArr !== '' ? formdata.append('brand', brandIdArr) : null;
     categoryArr !== '' ? formdata.append('category', categoryArr) : null;
+    searchText !== undefined
+      ? formdata.append('search_keyword', searchText)
+      : null;
+
     console.log('formdata:', formdata);
     const request = {
       data: formdata,
@@ -225,10 +239,11 @@ const FilterScreen = () => {
           // Toast.showWithGravity(res.message, Toast.SHORT, Toast.BOTTOM);
           setShopItem(res.data);
           console.log(res.data);
+          setLoading(false);
         }
       },
       onFail: error => {
-        // setLoading(false);
+        setLoading(false);
       },
     };
     dispatch(getFilter(request));
@@ -250,13 +265,13 @@ const FilterScreen = () => {
         onClaimPress={() =>
           navigate(routeName.offerDetails, {
             item,
-            shopName:item.shop
+            shopName: item.shop,
           })
         }
         onItemPress={() =>
           navigate(routeName.offerDetails, {
             item,
-            shopName:item.shop
+            shopName: item.shop,
           })
         }
       />
@@ -274,13 +289,20 @@ const FilterScreen = () => {
     setCateName([]);
   };
 
+  
   return (
     <View style={styles.mainContainer}>
       <View style={styles.mainheadContainer}>
-        <Text style={styles.headerRightText}>{stringslang.FILTER}</Text>
+        <Text style={styles.headerRightText}>
+          {route.params !== undefined ? stringslang.SEARCH : stringslang.FILTER}
+        </Text>
         <View style={styles.rightMainView}></View>
         <Text
-          onPress={() => navigate(routeName.offers)}
+          onPress={() =>
+            route.params !== undefined
+              ? navigate(routeName.home)
+              : navigate(routeName.offers)
+          }
           style={styles.headerLeftText}>
           {stringslang.CLOSE}
         </Text>
@@ -376,22 +398,32 @@ const FilterScreen = () => {
         <TouchableOpacity
           style={styles.btnStyle}
           onPress={() => {
-            clearFilterFunction();
+            route.params !== undefined
+              ? navigate(routeName.home)
+              : clearFilterFunction();
           }}>
-          <Text style={styles.btnTextStyle}>{stringslang.CLEAR_FILTER}</Text>
+          <Text style={styles.btnTextStyle}>
+            {route.params !== undefined
+              ? stringslang.CLEAR_SEARCH
+              : stringslang.CLEAR_FILTER}
+          </Text>
         </TouchableOpacity>
-        <View style={styles.rightMainView}>
-          <GradientBtn
-            mainContainer={[styles.btnStyle, {paddingHorizontal: wp(0)}]}
-            linearGradient={styles.btnStyle}
-            title={stringslang.SHOW_RESULT}
-            onPress={() => {
-              filterApicall();
-            }}
-          />
-        </View>
+        {shopItem.length === 0 ? (
+          <View style={styles.rightMainView}>
+            <GradientBtn
+              mainContainer={[styles.btnStyle, {paddingHorizontal: wp(0)}]}
+              linearGradient={styles.btnStyle}
+              title={stringslang.SHOW_RESULT}
+              onPress={() => {
+                filterApicall();
+              }}
+            />
+          </View>
+        ) : null}
       </View>
       <View style={styles.sepratorView} />
+
+      <Loading visible={loading} />
     </View>
   );
 };

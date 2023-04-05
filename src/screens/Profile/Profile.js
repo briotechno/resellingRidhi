@@ -162,7 +162,7 @@ const Profile = ({navigation}) => {
           />
           <ManageItem
             source={<Notifications />}
-            onPress={() => navigate(routeName.notification)}
+            onPress={() => navigate(routeName.notification,{transaction:profileDetails.transactionData})}
             rightSource={icons.forward}
             title={stringslang.NOTIFICATIONS}
           />

@@ -183,4 +183,5 @@ export const routeName = {
   newsDetails: 'newsDetails',
   analyticsDetails: 'AnalyticsDetails',
   FilterScreen: 'FilterScreen',
+  NotificationSettingScreen: 'NotificationSettingScreen',
 };

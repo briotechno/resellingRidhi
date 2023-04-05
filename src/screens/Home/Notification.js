@@ -1,14 +1,15 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
 
-import { BtnIconText, NoNotification } from "../../components";
-import { colors } from "../../helper/colorConstant";
-import { strings } from "../../helper/constants";
-import { icons, images } from "../../helper/iconConstant";
-import { goBack } from "../../helper/rootNavigation";
-import { fontSize, hp, statusBar, wp } from "../../helper/utilities";
-import stringslang from "../lng/LocalizedStrings";
-const Notification = () => {
+import {BtnIconText, NoNotification} from '../../components';
+import {colors} from '../../helper/colorConstant';
+import {routeName, strings} from '../../helper/constants';
+import {icons, images} from '../../helper/iconConstant';
+import {goBack, navigate} from '../../helper/rootNavigation';
+import {fontSize, hp, statusBar, wp} from '../../helper/utilities';
+import stringslang from '../lng/LocalizedStrings';
+const Notification = ({route}) => {
+  console.log('data of user::', route.params.transaction);
   return (
     <View style={styles.mainContainer}>
       <BtnIconText
@@ -17,11 +18,17 @@ const Notification = () => {
         onPress={() => goBack()}
         mainContainer={styles.headerMainView}
         textStyle={styles.headerText}
-        iconStyle={{ tintColor: colors.blue }}
+        iconStyle={{tintColor: colors.blue}}
+        Settingtitle={stringslang.SETTING}
+        onSettingPress={() =>
+          navigate(routeName.NotificationSettingScreen, {
+            transaction: route.params.transaction,
+          })
+        }
       />
       <NoNotification
         source={images.noNotification}
-        title={stringslang.NO_NOTIFICATIONS}
+        title={strings.noNotifications}
       />
     </View>
   );

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  Keyboard,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {getDashboard} from '../../actions/HomeAction';
@@ -30,6 +31,9 @@ import {fontSize, hp, statusBar, wp} from '../../helper/utilities';
 import stringslang from '../lng/LocalizedStrings';
 import {getAsyncStorage} from '../../helper/globalFunction';
 import {storageKey} from '../../helper/constants';
+import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+
 const Home = ({navigation}) => {
   // console.log('routehome', route.params.skipTab);
   const [searchText, setSearchText] = useState('');
@@ -44,6 +48,15 @@ const Home = ({navigation}) => {
   const [offerActiveIdx, setOfferActiveIdx] = useState(0);
 
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
+  // const textInputRef = useRef();
+
+  useEffect(() => {
+    if (isFocused) {
+      setSearchText('');
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     const getResult = async () => {
@@ -63,7 +76,8 @@ const Home = ({navigation}) => {
           if (res) {
             console.log('res dash::', res);
             setHighlightData(res?.highlights);
-            setTrendingOfferList(res?.trending_offers);
+            // setTrendingOfferList(res?.trending_offers);
+            setTrendingOfferList(res?.latest_news);
             setPopularBrandList(res?.popular_brands);
             setPopularShopList(res?.popular_shops);
             setPopularOfferList(res?.popular_offers);
@@ -77,7 +91,6 @@ const Home = ({navigation}) => {
       };
       dispatch(getDashboard(request));
     };
-
     getResult();
   }, []);
 
@@ -98,9 +111,15 @@ const Home = ({navigation}) => {
   const renderTrendingItem = ({item, index}) => {
     return (
       <TrendingItem
-        title={'Grab your desserts'}
-        coupon={'250 coupons from 12 places'}
-        bgSource={item?.image_url ? {uri: item?.image_url} : null}
+        onPress={() =>
+          navigate(routeName.newsDetails, {
+            item,
+          })
+        }
+        coupon={item?.news_name ? item?.news_name : null}
+        // title={'Grab your desserts'}
+        // coupon={'250 coupons from 12 places'}
+        bgSource={item?.news_img ? {uri: item?.news_img} : null}
       />
     );
   };
@@ -145,7 +164,10 @@ const Home = ({navigation}) => {
     );
   };
 
-  const onSettingPress = () => {};
+  const onSettingPress = async () => {
+    let userDetail = await getAsyncStorage(storageKey.userDetails);
+    navigate(routeName.notification, {transaction: userDetail.transactionData});
+  };
 
   const onNotificationPress = () => {
     navigate(routeName.notification);
@@ -157,13 +179,21 @@ const Home = ({navigation}) => {
         leftSource={icons.logo}
         // right1Source={icons.notification}
         right2Source={icons.notification}
-        // onSettingPress={onSettingPress}
+        onSettingPress={onSettingPress}
         onNotificationPress={onNotificationPress}
       />
       <Search
         value={searchText}
         leftImgSource={icons.search}
         onChangeText={onSearchTextChange}
+        searchImgstyle={searchText !== '' ? {tintColor: colors.black} : {}}
+        onPress={() =>
+          searchText !== ''
+            ? navigate(routeName.FilterScreen, {
+                searchText,
+              })
+            : null
+        }
       />
       <View style={styles.sepratorView} />
 

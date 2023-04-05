@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, ImageBackground, Text} from 'react-native';
+import {StyleSheet, ImageBackground, Text, TouchableOpacity} from 'react-native';
 
 import {colors} from '../../helper/colorConstant';
 import {fontSize, hp, wp} from '../../helper/utilities';
 
-const TrendingItem = ({bgSource, title, coupon}) => {
+const TrendingItem = ({bgSource, title, coupon,onPress}) => {
   return (
+    <TouchableOpacity onPress={onPress}>
     <ImageBackground
       style={styles.mainContainer}
       // blurRadius={6}
@@ -14,6 +15,7 @@ const TrendingItem = ({bgSource, title, coupon}) => {
       <Text style={styles.titleTextStyle}>{title}</Text>
       <Text style={styles.couponText}>{coupon}</Text>
     </ImageBackground>
+    </TouchableOpacity>
   );
 };
 

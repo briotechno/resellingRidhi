@@ -1,14 +1,29 @@
 import React from 'react';
-import {StyleSheet, View, Image, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 import {colors} from '../../helper/colorConstant';
 import {strings} from '../../helper/constants';
 import {fontSize, hp, isIos, wp} from '../../helper/utilities';
 import stringslang from '../../screens/lng/LocalizedStrings';
-function Search({value, onChangeText, leftImgSource}) {
+function Search({
+  value,
+  onChangeText,
+  leftImgSource,
+  onPress,
+  searchImgstyle,
+  onSubmitEditing,
+  ref,
+}) {
   return (
     <View style={styles.sectionStyle}>
       <TextInput
+        onSubmitEditing={onSubmitEditing}
         value={value}
         autoCorrect={false}
         style={styles.textInput}
@@ -16,8 +31,14 @@ function Search({value, onChangeText, leftImgSource}) {
         onChangeText={onChangeText}
         placeholderTextColor={colors.gray}
         placeholder={stringslang.SEARCH}
+        ref={ref}
       />
-      <Image source={leftImgSource} style={styles.searchImg} />
+      <TouchableOpacity onPress={onPress} hitSlop={5}>
+        <Image
+          source={leftImgSource}
+          style={[styles.searchImg, searchImgstyle]}
+        />
+      </TouchableOpacity>
     </View>
   );
 }

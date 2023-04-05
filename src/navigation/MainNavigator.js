@@ -25,6 +25,7 @@ import newsDetails from '../screens/News/NewsDetails';
 import TermandCondition from '../screens/Auth/TermandCondition';
 import AnalyticsDetails from '../screens/News/AnalyticsDetails';
 import FilterScreen from '../screens/Offers/FilterScreen';
+import NotificationSettingScreen from '../screens/Home/NotificationSettingScreen';
 const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
@@ -59,6 +60,8 @@ export default function MainNavigator() {
           component={AnalyticsDetails}
         />
         <Stack.Screen name={routeName.FilterScreen} component={FilterScreen} />
+        <Stack.Screen name={routeName.NotificationSettingScreen} component={NotificationSettingScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

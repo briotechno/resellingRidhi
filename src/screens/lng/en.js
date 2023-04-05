@@ -59,6 +59,7 @@ export default {
   PRICE_RANGE: 'Price Range',
   BRAND_WITH_CATEGORY: 'Brand with Category',
   CLEAR_FILTER: 'Clear Filter',
+  CLEAR_SEARCH: 'Clear Search',
   SHOW_RESULT: 'Show result',
   CLOSE: 'Close',
   FILTER: 'Filter',
@@ -75,6 +76,7 @@ export default {
   MANAGE_PAYMENT: 'Manage Payment',
   INVITE_FRIENDS: 'Invite Friends',
   NOTIFICATIONS: 'Notifications',
+  NOTIFICATIONS_SETTING: 'Notifications Settings',
   PRIVACY_POLICY: 'Privacy Policy',
   ABOUT_US: 'About Us',
   LANGUAGE_SELECTION: 'Language Selection',
@@ -111,6 +113,7 @@ export default {
 
   // Subscription
   SUBSCRIPTION: 'Subscription',
+  PRE_SUBSCRIPTION:'Premium Subscription',
   STARTER: 'Bronze',
   BASIC: 'Silver',
   PRO: 'Gold',
